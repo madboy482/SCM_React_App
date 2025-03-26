@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Home, FileText, CreditCard, BarChart, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import BottomNavigation from '../components/BottomNavigation';
+import BottomNavigation from '../../components/BottomNavigation';
 
 const PartiesInventoryUI = () => {
   const navigate = useNavigate();
