@@ -8,7 +8,7 @@ const PartiesPage = () => {
 
   const handleBack = () => {
     // Navigate back to the previous page
-    navigate(-1);
+    navigate('/admin-dashboard');
   };
 
   const handleCreateParty = () => {
