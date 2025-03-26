@@ -10,7 +10,7 @@ import BottomNavigation from '../../components/BottomNavigation';
 
 const CardButton = ({ children, className = '', onClick }) => (
   <div 
-    className={`bg-white shadow-md rounded-xl p-4 flex items-center justify-center text-center transition-all duration-300 hover:bg-primary-purple hover:text-white hover:shadow-lg cursor-pointer ${className}`}
+    className={`bg-white shadow rounded-lg p-4 flex items-center justify-center text-center transition-all duration-300 hover:bg-[#3460DC] hover:text-white hover:shadow-lg cursor-pointer ${className}`}
     onClick={onClick}
   >
     {children}
@@ -30,83 +30,88 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F0FA] flex flex-col">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col pb-16">
       {/* Top Navigation */}
       <div className="p-4 bg-white shadow-sm flex justify-between items-center">
         <div className="flex items-center">
           <button 
             onClick={handleBack}
-            className="p-2 mr-2 text-gray-600 hover:text-primary-purple"
+            className="p-2 mr-2 text-[#1D1D1D] hover:text-[#3460DC]"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <div className="text-xl font-semibold text-primary-purple">
+          <div className="font-bold text-lg text-[#1D1D1D]">
             Admin Dashboard
           </div>
         </div>
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <Bell className="text-gray-500 hover:text-primary-purple cursor-pointer" />
+            <Bell className="text-[#1D1D1D] hover:text-[#3460DC] cursor-pointer" />
             <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full h-3 w-3 flex items-center justify-center text-[8px]">
               3
             </span>
           </div>
-          <User className="text-gray-500 hover:text-primary-purple cursor-pointer" />
+          <User className="text-[#1D1D1D] hover:text-[#3460DC] cursor-pointer" />
         </div>
       </div>
 
       {/* Search Bar */}
       <div className="p-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-[#666666]" />
+          </div>
           <input 
             type="text" 
             placeholder="Search Documents..." 
-            className="w-full pl-10 pr-4 py-2 bg-white rounded-xl border-none focus:ring-2 focus:ring-primary-purple"
+            className="w-full pl-10 px-4 py-2 border border-[#D9D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3460DC]"
           />
         </div>
       </div>
 
       {/* Create Section */}
-      <div className="px-4 mb-4">
-        <h2 className="text-lg font-semibold mb-3 text-primary-purple">Create</h2>
+      <div className="px-4 mb-6">
+        <h2 className="text-xl font-bold mb-3 text-[#1D1D1D]">Create</h2>
         <div className="grid grid-cols-3 gap-4">
-          <CardButton>Items</CardButton>
+          <CardButton onClick={() => handleNavigate('/parties-inventory')}>Items</CardButton>
           <CardButton onClick={() => handleNavigate('/parties')}>Parties</CardButton>
           <CardButton>Purchase</CardButton>
         </div>
       </div>
 
       {/* View Transactions */}
-      <div className="px-4 mb-4">
-        <CardButton className="bg-primary-purple text-black hover:bg-purple-700">
+      <div className="px-4 mb-6">
+        <button 
+          className="w-full bg-[#3460DC] text-white shadow rounded-lg p-4 text-center hover:bg-[#2A4DB3] transition duration-300"
+          onClick={() => handleNavigate('/all-transactions')}
+        >
           View all Transactions
-        </CardButton>
+        </button>
       </div>
 
       {/* Manage Section */}
-      <div className="px-4 mb-4">
-        <h2 className="text-lg font-semibold mb-3 text-primary-purple">Manage</h2>
+      <div className="px-4 mb-6">
+        <h2 className="text-xl font-bold mb-3 text-[#1D1D1D]">Manage</h2>
         <div className="grid grid-cols-2 gap-4">
-          <CardButton>Payment</CardButton>
-          <CardButton>Returns</CardButton>
-          <CardButton>Access Reports</CardButton>
-          <CardButton>Update Inventory</CardButton>
+          <CardButton onClick={() => handleNavigate('/payments')}>Payment</CardButton>
+          <CardButton onClick={() => handleNavigate('/returns')}>Returns</CardButton>
+          <CardButton onClick={() => handleNavigate('/reports')}>Access Reports</CardButton>
+          <CardButton onClick={() => handleNavigate('/update-inventory')}>Update Inventory</CardButton>
         </div>
       </div>
 
       {/* Financial Summary */}
-      <div className="px-4 mb-4 grid grid-cols-2 gap-4">
-        <div className="bg-red-100 rounded-xl p-4 text-center">
+      <div className="px-4 mb-6 grid grid-cols-2 gap-4">
+        <div className="bg-red-100 rounded-lg p-4 text-center shadow-sm">
           <p className="text-sm text-red-600 font-medium">Overdue</p>
           <p className="font-bold text-lg text-red-700">₹12,110.00</p>
         </div>
-        <div className="bg-green-100 rounded-xl p-4 text-center">
+        <div className="bg-green-100 rounded-lg p-4 text-center shadow-sm">
           <p className="text-sm text-green-600 font-medium">Total Paid</p>
           <p className="font-bold text-lg text-green-700">₹12,56,110.00</p>
         </div>
       </div>
-
+        
       {/* Bottom Navigation */}
       <BottomNavigation />
     </div>
