@@ -71,7 +71,7 @@ const AdminDashboard = () => {
       <div className="px-4 mb-4">
         <h2 className="text-lg font-semibold mb-3 text-primary-purple">Create</h2>
         <div className="grid grid-cols-3 gap-4">
-          <CardButton>Items</CardButton>
+          <CardButton onClick={() => handleNavigate('/Parties-Inventory')}>Items</CardButton>
           <CardButton onClick={() => handleNavigate('/parties')}>Parties</CardButton>
           <CardButton>Purchase</CardButton>
         </div>
