@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Home, FileText, CreditCard, BarChart } from 'lucide-react';
+import { Home, FileText, CreditCard, BarChart, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import BottomNavigation from '../components/BottomNavigation';
 
 const PartiesInventoryUI = () => {
+  const navigate = useNavigate();
+  
   const [items, setItems] = useState([
     { 
       itemName: 'FCCAKE-FNN', 
@@ -29,11 +33,20 @@ const PartiesInventoryUI = () => {
     }
   ]);
 
+  const handleBack = () => {
+    // Navigate back to the previous page
+    navigate(-1);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col pb-16">
       {/* Top Navigation Bar */}
       <div className="bg-white shadow-sm p-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
+          <ArrowLeft 
+            className="text-[#1D1D1D] cursor-pointer mr-2" 
+            onClick={handleBack}
+          />
           <span className="text-xl font-semibold text-purple-600">Parties</span>
           <span className="bg-purple-100 text-purple-600 rounded-full px-2 py-1 text-xs">29</span>
         </div>
@@ -114,25 +127,8 @@ const PartiesInventoryUI = () => {
         </table>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="bg-white border-t fixed bottom-0 left-0 right-0 flex justify-around p-3">
-        <button className="flex flex-col items-center text-purple-600">
-          <Home className="mb-1" />
-          <span className="text-xs">Home</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-600">
-          <FileText className="mb-1" />
-          <span className="text-xs">Invoices</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-600">
-          <CreditCard className="mb-1" />
-          <span className="text-xs">Payments</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-600">
-          <BarChart className="mb-1" />
-          <span className="text-xs">Reports</span>
-        </button>
-      </div>
+      {/* Using the shared BottomNavigation component */}
+      <BottomNavigation />
     </div>
   );
 };
