@@ -26,7 +26,7 @@ function App() {
           <Route path="/create-purchase-return" element={<CreatePR />} />
           <Route path="/proforma-invoice" element={<ProformaInvoice />} />
           <Route path="/create-proforma-invoice" element={<CreateProforma />} />
-          <Route path="/Parties-Inventory" element={<PartiesInventoryUI />} />
+          <Route path="/parties-inventory" element={<PartiesInventoryUI />} />
           <Route path="/" element={<CreateAccount />} />
         </Routes>
       </div>
