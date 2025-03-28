@@ -75,7 +75,7 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-3 gap-4">
           <CardButton onClick={() => handleNavigate('/parties-inventory')}>Items</CardButton>
           <CardButton onClick={() => handleNavigate('/parties')}>Parties</CardButton>
-          <CardButton>Purchase</CardButton>
+          <CardButton onClick={() => handleNavigate('/create-po')}>Purchase</CardButton>
         </div>
       </div>
 
@@ -118,4 +118,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminDashboard; 

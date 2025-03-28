@@ -20,7 +20,7 @@ const PRList = () => {
         <div className="flex items-center space-x-3">
           <ChevronLeft 
             className="text-[#1D1D1D] cursor-pointer" 
-            onClick={() => navigate('/supplier-dashboard')}
+            onClick={() => navigate(-1)}
           />
           <h1 className="text-xl font-semibold text-[#1D1D1D]">Purchase Return</h1>
         </div>

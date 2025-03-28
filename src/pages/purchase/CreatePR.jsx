@@ -1,14 +1,19 @@
 import React from 'react';
-import { 
-  ChevronLeft,
-  Plus, 
-  Calendar 
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, Plus, Calendar } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BottomNavigation from '../../components/BottomNavigation';
 
 const CreatePR = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBack = () => {
+    if (location.state && location.state.from) {
+      navigate(location.state.from); // Go back to previous page
+    } else {
+      navigate('/admin-dashboard'); // Fallback if no from route is available
+    }
+  };
 
   return (
     <div className="bg-[#F5F5F5] min-h-screen flex flex-col pb-16">
@@ -16,7 +21,7 @@ const CreatePR = () => {
         <div className="flex items-center space-x-3">
           <ChevronLeft 
             className="text-[#1D1D1D] cursor-pointer" 
-            onClick={() => navigate('/purchase-return-list')}
+            onClick={handleBack}
           />
           <h1 className="text-xl font-semibold text-[#1D1D1D]">Create Purchase Return</h1>
         </div>
@@ -79,8 +84,7 @@ const CreatePR = () => {
             <button 
               className="w-1/2 border border-[#3460DC] text-[#3460DC] rounded py-2 text-sm"
               onClick={() => {
-                // Save logic here
-                navigate('/create-purchase-return'); // Reset form
+                navigate('/create-purchase-return', { state: { from: location.state?.from } });
               }}
             >
               Save & New
@@ -88,7 +92,6 @@ const CreatePR = () => {
             <button 
               className="w-1/2 bg-[#3460DC] text-white rounded py-2 text-sm"
               onClick={() => {
-                // Save logic here
                 navigate('/purchase-return-list');
               }}
             >
