@@ -5,7 +5,14 @@ import BottomNavigation from '../../components/BottomNavigation';
 
 const PartiesInventoryUI = () => {
   const navigate = useNavigate();
-  
+  const [path, setPath] = useState('/item_creation_basic');
+
+  const handleClick = () => {
+    if (path) {
+      navigate(path);
+    }
+  };
+
   const [items, setItems] = useState([
     { 
       itemName: 'FCCAKE-FNN', 
@@ -35,7 +42,7 @@ const PartiesInventoryUI = () => {
 
   const handleBack = () => {
     // Navigate back to the previous page
-    navigate(-1);
+    navigate('/admin-dashboard');
   };
 
   return (
@@ -47,12 +54,17 @@ const PartiesInventoryUI = () => {
             className="text-[#1D1D1D] cursor-pointer mr-2" 
             onClick={handleBack}
           />
-          <span className="text-xl font-semibold text-purple-600">Parties</span>
+          <span className="text-xl font-semibold text-purple-600">Items</span>
           <span className="bg-purple-100 text-purple-600 rounded-full px-2 py-1 text-xs">29</span>
         </div>
         <div className="flex items-center space-x-2">
           <button className="text-gray-600 hover:bg-gray-100 p-2 rounded">Reports</button>
-          <button className="bg-purple-600 text-white px-4 py-2 rounded">+ Create Item</button>
+          <button
+            className="bg-purple-600 text-white px-4 py-2 rounded"
+            onClick={handleClick}
+          >
+            + Create Item
+          </button>
         </div>
       </div>
 
@@ -93,7 +105,12 @@ const PartiesInventoryUI = () => {
           <select className="border rounded px-3 py-2">
             <option>Bulk Action</option>
           </select>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded">Create Item</button>
+          <button
+            className="bg-purple-600 text-white px-4 py-2 rounded"
+            onClick={handleClick}
+          >
+            + Create Item
+          </button>
         </div>
       </div>
 
