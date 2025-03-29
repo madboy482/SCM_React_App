@@ -11,7 +11,7 @@ const CreatePR = () => {
     if (location.state && location.state.from) {
       navigate(location.state.from); // Go back to previous page
     } else {
-      navigate('/admin-dashboard'); // Fallback if no from route is available
+      navigate(-1); // Fallback if no from route is available
     }
   };
 
