@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ChevronLeft, 
   Search, 
@@ -7,11 +7,31 @@ import {
   Plus, 
   Calendar 
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BottomNavigation from '../../components/BottomNavigation';
 
 const POs = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [lastPage, setLastPage] = useState(-1); // Default fallback
+
+  // On component mount, determine the previous page
+  useEffect(() => {
+    // Check if we have a state with 'from' path
+    if (location.state && location.state.from) {
+      setLastPage(location.state.from);
+    } else {
+      // If referrer exists in sessionStorage (set during navigation)
+      const referrer = sessionStorage.getItem('referrer');
+      if (referrer) {
+        setLastPage(referrer);
+      }
+    }
+  }, [location]);
+
+  const handleBack = () => {
+    navigate(lastPage);
+  };
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col pb-16">
@@ -19,7 +39,7 @@ const POs = () => {
         <div className="flex items-center space-x-3">
           <ChevronLeft 
             className="text-[#1D1D1D] cursor-pointer" 
-            onClick={() => navigate('/supplier-dashboard')}
+            onClick={handleBack}
           />
           <h1 className="text-xl font-semibold text-[#1D1D1D]">Purchase Orders</h1>
           <div className="bg-[#E8F0FE] text-[#3460DC] px-2 py-0.5 rounded-full text-xs">
@@ -101,6 +121,11 @@ const POs = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="text-xs text-gray-500 text-right mt-2 px-4">
+        <p>Last updated: 2025-03-28 16:42:26</p>
+        <p>User: krishh-kumarr</p>
       </div>
 
       <BottomNavigation />

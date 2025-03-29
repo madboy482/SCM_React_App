@@ -11,7 +11,7 @@ import BottomNavigation from '../../components/BottomNavigation';
 
 const SupplierDashboard = () => {
   const navigate = useNavigate();
-  const currentDate = '2025-03-25'; // You can replace with dynamic date using new Date()
+  const currentDate = '2025-03-28 17:08:46'; // Updated with current date and time
 
   const handleBack = () => {
     // Navigate to login page with userType set to Supplier
@@ -53,7 +53,7 @@ const SupplierDashboard = () => {
         <div className="mb-6">
           <button 
             className="w-full bg-[#3460DC] text-white shadow rounded-lg p-4 text-center hover:bg-[#2A4DB3] transition duration-300"
-            onClick={() => navigate('/purchase-orders')}
+            onClick={() => navigate('/purchase-orders', { state: { from: '/supplier-dashboard' } })}
           >
             View Purchase Orders
           </button>
@@ -63,13 +63,16 @@ const SupplierDashboard = () => {
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-3 text-[#1D1D1D]">Upload</h2>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white shadow rounded-lg p-4 flex items-center justify-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white cursor-pointer">
+            <div 
+              className="bg-white shadow rounded-lg p-4 flex items-center justify-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white cursor-pointer"
+              onClick={() => navigate('/delivery-challan', { state: { from: '/supplier-dashboard' } })}
+            >
               <PlusCircle className="mr-2" />
               Delivery Challan
             </div>
             <div 
               className="bg-white shadow rounded-lg p-4 flex items-center justify-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white cursor-pointer"
-              onClick={() => navigate('/create-purchase-invoice')}
+              onClick={() => navigate('/create-purchase-invoice', { state: { from: '/supplier-dashboard' } })}
             >
               <PlusCircle className="mr-2" />
               Purchase Invoice
@@ -81,15 +84,21 @@ const SupplierDashboard = () => {
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-3 text-[#1D1D1D]">View</h2>
           <div className="grid grid-cols-2 gap-4">
-            <button className="bg-white shadow rounded-lg p-4 text-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white">
+            <button 
+              className="bg-white shadow rounded-lg p-4 text-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white"
+              onClick={() => navigate('/payment-out', { state: { from: '/supplier-dashboard' } })}
+            >
               Payment Status
             </button>
-            <button className="bg-white shadow rounded-lg p-4 text-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white">
+            <button 
+              className="bg-white shadow rounded-lg p-4 text-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white"
+              onClick={() => navigate('/debit-notes', { state: { from: '/supplier-dashboard' } })}
+            >
               Debit Notes
             </button>
             <button 
               className="bg-white shadow rounded-lg p-4 text-center hover:shadow-md transition duration-300 hover:bg-[#3460DC] hover:text-white"
-              onClick={() => navigate('/purchase-return-list')}
+              onClick={() => navigate('/purchase-return-list', { state: { from: '/supplier-dashboard' } })}
             >
               Purchase Returns
             </button>
@@ -111,7 +120,7 @@ const SupplierDashboard = () => {
         {/* User Info */}
         <div className="text-xs text-gray-500 text-right mt-2">
           <p>Last updated: {currentDate}</p>
-          <p>User: madboy482</p>
+          <p>User: krishh-kumarr</p>
         </div>
       </div>
         

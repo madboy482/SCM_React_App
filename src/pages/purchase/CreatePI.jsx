@@ -16,7 +16,7 @@ const CreatePI = () => {
         <div className="flex items-center space-x-3">
           <ChevronLeft 
             className="text-[#1D1D1D] cursor-pointer"
-            onClick={() => navigate('/purchase-orders')} 
+            onClick={() => navigate(-1)} 
           />
           <h1 className="text-xl font-semibold text-[#1D1D1D]">Create Purchase Invoice</h1>
         </div>
