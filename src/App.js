@@ -14,7 +14,8 @@ import {
   PaymentOut
 } from './pages/purchase';
 import { ProformaInvoice, CreateProforma } from './pages/proforma';
-import { PartiesInventoryUI, CreateItemForm } from './pages/items';
+import { PartiesInventoryUI, CreateItemForm, ItemCreationStock, ItemCreationPricing, ItemCreationFields} from './pages/items';
+
 
 function App() {
   return (
@@ -37,7 +38,10 @@ function App() {
           <Route path="/proforma-invoice" element={<ProformaInvoice />} />
           <Route path="/create-proforma-invoice" element={<CreateProforma />} />
           <Route path="/parties-inventory" element={<PartiesInventoryUI />} />
-          <Route path="/item_creation_basic" element ={<CreateItemForm/>} />
+          <Route path="/item_creation_basic" element={<CreateItemForm />} />
+          <Route path="/item_creation_stock" element={<ItemCreationStock />} />
+          <Route path="/item_creation_pricing" element={<ItemCreationPricing />} />
+          <Route path="/item_creation_fields" element={<ItemCreationFields />} />
           <Route path="/delivery-challan" element={<DeliveryChallan />} />
           <Route path="/debit-notes" element={<DebitNote />} />
           <Route path="/payment-out" element={<PaymentOut />} />
