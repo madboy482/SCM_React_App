@@ -12,24 +12,24 @@ const ItemCreationStock = () => {
   const calendarRef = useRef(null);
   const warningRef = useRef(null);
   
-  // Initialize formData with data from location state if available
-  const [formData, setFormData] = useState(() => {
-    const previousData = location.state?.formData || {};
-    return {
-      ...previousData,
-      itemCode: previousData.itemCode || '',
-      hsnCode: previousData.hsnCode || '',
-      measuringUnit: previousData.measuringUnit || 'Pieces(PCS)',
-      godown: previousData.godown || '',
-      openingStock: previousData.openingStock || '',
-      openingStockUnit: previousData.openingStockUnit || 'PCS',
-      asOfDate: previousData.asOfDate || '',
-      enableLowStockWarning: previousData.enableLowStockWarning || false,
-      lowStockThreshold: previousData.lowStockThreshold || '',
-      description: previousData.description || '',
-      images: previousData.images || []
-    };
-  });
+// Initialize formData with data from location state if available
+const [formData, setFormData] = useState(() => {
+  const previousData = location.state?.formData || {};
+  return {
+    ...previousData,
+    itemCode: previousData.itemCode || '',
+    hsnCode: previousData.hsnCode || '',
+    measuringUnit: previousData.measuringUnit || 'Pieces(PCS)',
+    godown: previousData.godown || '',
+    openingStock: previousData.openingStock || '',
+    openingStockUnit: previousData.openingStockUnit || 'PCS',
+    asOfDate: previousData.asOfDate || '2025-03-16',
+    enableLowStockWarning: previousData.enableLowStockWarning || false,
+    lowStockThreshold: previousData.lowStockThreshold || '',
+    description: previousData.description || '',
+    images: previousData.images || []
+  };
+});
 
   const sections = [
     { id: 'basic-details', label: 'Basic Details', icon: FileText, path: '/item_creation_basic' },
@@ -277,16 +277,15 @@ const ItemCreationStock = () => {
           </div>
           
           {/* As of Date with Calendar Dropdown */}
-          <div className="space-y-2 relative">
+          <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">As of Date</label>
             <div className="relative">
               <input 
-                type="text"
+                type="date"
                 name="asOfDate"
                 value={formData.asOfDate}
                 onChange={handleInputChange}
-                placeholder="DD MMM YYYY"
-                className="w-full border rounded px-2 py-1 pr-8"
+                className="w-full border rounded px-2 py-1  "
                 readOnly
               />
               <Calendar 
