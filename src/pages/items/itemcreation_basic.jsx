@@ -67,123 +67,186 @@ const CreateItemForm = () => {
     switch(activeSection) {
       case 'basic-details':
         return (
-            <div className="p-4 space-y-4">
+          <div className="bg-white rounded-lg p-4 space-y-4">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Item Code</label>
-              <div className="flex">
-                <input 
-                  type="text" 
-                  name="itemCode"
-                  value={formData.itemCode}
-                  onChange={handleInputChange}
-                  placeholder="Ex: ITM12367" 
-                  className="flex-grow border rounded-l px-2 py-1"
-                />
-                <button className="bg-blue-500 text-white px-3 rounded-r">
-                  Generate Barcode
-                </button>
+              <label className="block text-gray-800 font-medium">Item Type <span className="text-red-500">*</span></label>
+              <div className="grid grid-cols-2 gap-2">
+                {/* Added onClick handler to change itemType to 'Product' */}
+                <div 
+                  className={`border rounded-lg p-2 flex items-center cursor-pointer ${formData.itemType === 'Product' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
+                  onClick={() => setFormData({...formData, itemType: 'Product'})}
+                >
+                  <div className={`w-5 h-5 rounded-full border ${formData.itemType === 'Product' ? 'border-purple-500 bg-purple-500' : 'border-gray-400'} mr-2 flex items-center justify-center`}>
+                    {formData.itemType === 'Product' && <div className="w-2 h-2 bg-white rounded-full"></div>}
+                  </div>
+                  <span>Product</span>
+                </div>
+                {/* Added onClick handler to change itemType to 'Service' */}
+                <div 
+                  className={`border rounded-lg p-2 flex items-center cursor-pointer ${formData.itemType === 'Service' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
+                  onClick={() => setFormData({...formData, itemType: 'Service'})}
+                >
+                  <div className={`w-5 h-5 rounded-full border ${formData.itemType === 'Service' ? 'border-purple-500 bg-purple-500' : 'border-gray-400'} mr-2 flex items-center justify-center`}>
+                    {formData.itemType === 'Service' && <div className="w-2 h-2 bg-white rounded-full"></div>}
+                  </div>
+                  <span>Service</span>
+                </div>
               </div>
             </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">HSN Code</label>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">Category</label>
+              <div className="relative">
+                <select 
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-lg p-2 pr-8 appearance-none"
+                >
+                  <option value="">Select Category</option>
+                  <option value="category1">Category 1</option>
+                  <option value="category2">Category 2</option>
+                </select>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">Item Name <span className="text-red-500">*</span></label>
               <input 
                 type="text" 
-                name="hsnCode"
-                value={formData.hsnCode}
+                name="itemName"
+                value={formData.itemName}
                 onChange={handleInputChange}
-                placeholder="Ex: 4010" 
-                className="w-full border rounded px-2 py-1"
+                placeholder="ex: Maggie 20gm" 
+                className="w-full border border-gray-300 rounded-lg p-2"
+              />
+              {!formData.itemName && <p className="text-red-500 text-xs">Please enter the item name</p>}
+            </div>
+  
+            <div className="flex items-center justify-between">
+              <label className="block text-gray-800 font-medium">Show Item in Online Store</label>
+              <div className="relative">
+                <input 
+                  type="checkbox" 
+                  name="showInOnlineStore"
+                  checked={formData.showInOnlineStore}
+                  onChange={handleInputChange}
+                  className="sr-only"
+                  id="onlineStore"
+                />
+                <label 
+                  htmlFor="onlineStore" 
+                  className={`block w-12 h-6 rounded-full transition-colors duration-200 ease-in-out ${formData.showInOnlineStore ? 'bg-purple-500' : 'bg-gray-300'}`}
+                >
+                  <span 
+                    className={`block w-5 h-5 mt-0.5 ml-0.5 bg-white rounded-full transition-transform duration-200 ease-in-out ${formData.showInOnlineStore ? 'transform translate-x-6' : ''}`}
+                  ></span>
+                </label>
+              </div>
+            </div>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">Sales Price</label>
+              <div className="flex">
+                <div className="bg-gray-100 border border-gray-300 rounded-l-lg p-2 flex items-center">
+                  <span className="text-gray-500">₹</span>
+                </div>
+                <input 
+                  type="text" 
+                  name="salesPrice"
+                  value={formData.salesPrice}
+                  onChange={handleInputChange}
+                  placeholder="ex: ₹200" 
+                  className="flex-grow border border-gray-300 rounded-r-lg p-2"
+                />
+              </div>
+            </div>
+  
+            <div className="flex justify-end">
+              {/* Modified "With Tax" to be clickable with state tracking */}
+              <div 
+                className={`border rounded-lg p-2 cursor-pointer ${formData.withTax ? 'bg-purple-50 border-purple-500 text-purple-700' : 'bg-gray-100 border-gray-300 text-gray-700'}`}
+                onClick={() => setFormData({...formData, withTax: !formData.withTax})}
+              >
+                <span>With Tax</span>
+              </div>
+            </div>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">GST Tax Rate(%)</label>
+              <input 
+                type="text" 
+                name="gstTaxRate"
+                value={formData.gstTaxRate}
+                onChange={handleInputChange}
+                placeholder="None" 
+                className="w-full border border-gray-300 rounded-lg p-2"
               />
             </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Measuring Unit</label>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">Measuring Unit</label>
               <input 
                 type="text" 
                 name="measuringUnit"
                 value={formData.measuringUnit}
                 onChange={handleInputChange}
-                placeholder="Pieces (PCS)" 
-                className="w-full border rounded px-2 py-1"
+                placeholder="Pieces(PCS)" 
+                className="w-full border border-gray-300 rounded-lg p-2"
               />
             </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Godown</label>
-              <input 
-                type="text" 
-                name="godown"
-                value={formData.godown}
-                onChange={handleInputChange}
-                placeholder="Select Godown" 
-                className="w-full border rounded px-2 py-1"
-              />
-            </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Opening Stock</label>
+  
+            <div className="space-y-1">
+              <label className="block text-gray-800 font-medium">Opening Stock</label>
               <div className="flex">
                 <input 
                   type="text" 
                   name="openingStock"
                   value={formData.openingStock}
                   onChange={handleInputChange}
-                  placeholder="ex: 100" 
-                  className="flex-grow border rounded-l px-2 py-1"
+                  placeholder="ex: 150 PCS" 
+                  className="flex-grow border border-gray-300 rounded-l-lg p-2"
                 />
-                <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">PCS</span>
+                <div className="bg-white border border-gray-300 rounded-r-lg p-2 flex items-center">
+                  <span className="text-gray-700">PCS</span>
+                </div>
               </div>
             </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">As of Date</label>
-              <input 
-                type="date" 
-                name="asOfDate"
-                value={formData.asOfDate}
-                onChange={handleInputChange}
-                className="w-full border rounded px-2 py-1"
-              />
-            </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Pricing Type</label>
-              <input 
-                type="text" 
-                name="pricingType"
-                value={formData.pricingType}
-                onChange={handleInputChange}
-                placeholder="Select Pricing Type" 
-                className="w-full border rounded px-2 py-1"
-              />
-            </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Selling Price</label>
-              <input 
-                type="text" 
-                name="sellingPrice"
-                value={formData.sellingPrice}
-                onChange={handleInputChange}
-                placeholder="Enter Selling Price" 
-                className="w-full border rounded px-2 py-1"
-              />
-            </div>
-    
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Custom Fields</label>
-              <input 
-                type="text" 
-                name="customFields"
-                value={formData.customFields.value || ''}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  customFields: { ...prev.customFields, value: e.target.value }
-                }))}
-                placeholder="Enter Custom Fields" 
-                className="w-full border rounded px-2 py-1"
-              />
+  
+            <div className="border border-gray-300 rounded-lg p-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <span className="text-gray-800 font-medium mr-2">Enable Batching</span>
+                  <div className="bg-purple-100 text-purple-600 rounded-full w-5 h-5 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="relative">
+                  <input 
+                    type="checkbox" 
+                    name="enableBatching"
+                    checked={formData.enableBatching}
+                    onChange={handleInputChange}
+                    className="sr-only"
+                    id="enableBatching"
+                  />
+                  <label 
+                    htmlFor="enableBatching" 
+                    className={`block w-12 h-6 rounded-full transition-colors duration-200 ease-in-out ${formData.enableBatching ? 'bg-purple-500' : 'bg-gray-300'}`}
+                  >
+                    <span 
+                      className={`block w-5 h-5 mt-0.5 ml-0.5 bg-white rounded-full transition-transform duration-200 ease-in-out ${formData.enableBatching ? 'transform translate-x-6' : ''}`}
+                    ></span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         );
