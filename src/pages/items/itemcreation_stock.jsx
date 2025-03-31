@@ -71,7 +71,7 @@ const ItemCreationStock = () => {
   };
 
   const handleBack = () => {
-    navigate('/item_creation_basic', { state: { formData } });
+    navigate('/parties-inventory', { state: { formData } });
   };
 
   const handleSave = () => {
