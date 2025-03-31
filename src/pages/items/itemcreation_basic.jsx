@@ -17,14 +17,20 @@ const CreateItemForm = () => {
     measuringUnit: 'Pieces(PCS)',
     openingStock: '',
     enableBatching: false,
-    customFields: {}
+    customFields: {},
+    itemCode: '',
+    hsnCode: '',
+    godown: '',
+    asOfDate: '2025-03-16',
+    pricingType: '',
+    sellingPrice: ''
   });
 
   const sections = [
     { id: 'basic-details', label: 'Basic Details', icon: FileText },
-    { id: 'stock-details', label: 'Stock Details', icon: BarChart },
-    { id: 'pricing-details', label: 'Pricing Details', icon: CreditCard },
-    { id: 'custom-fields', label: 'Custom Fields', icon: Home }
+    { id: 'stock-details', label: 'Stock Details', icon: BarChart, path: '/item_creation_stock' },
+    { id: 'pricing-details', label: 'Pricing Details', icon: CreditCard, path: '/item_creation_pricing' },
+    { id: 'custom-fields', label: 'Custom Fields', icon: Home, path: '/item_creation_fields' }
   ];
 
   const handleInputChange = (e) => {
@@ -39,6 +45,24 @@ const CreateItemForm = () => {
     navigate('/parties-inventory');
   };
 
+  const handleSectionClick = (sectionId, path) => {
+    if (path) {
+      // Navigate to the separate component
+      navigate(path, { state: { formData } });
+    } else {
+      // Just change the active section within this component
+      setActiveSection(sectionId);
+    }
+  };
+
+  const handleSave = () => {
+    // Here you would typically save the data to your backend or state management
+    console.log('Saving form data:', formData);
+    
+    // Navigate to the next page (stock details) with the form data
+    navigate('/item_creation_stock', { state: { formData } });
+  };
+
   const renderActiveSection = () => {
     switch(activeSection) {
       case 'basic-details':
@@ -49,6 +73,9 @@ const CreateItemForm = () => {
               <div className="flex">
                 <input 
                   type="text" 
+                  name="itemCode"
+                  value={formData.itemCode}
+                  onChange={handleInputChange}
                   placeholder="Ex: ITM12367" 
                   className="flex-grow border rounded-l px-2 py-1"
                 />
@@ -62,6 +89,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">HSN Code</label>
               <input 
                 type="text" 
+                name="hsnCode"
+                value={formData.hsnCode}
+                onChange={handleInputChange}
                 placeholder="Ex: 4010" 
                 className="w-full border rounded px-2 py-1"
               />
@@ -71,6 +101,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">Measuring Unit</label>
               <input 
                 type="text" 
+                name="measuringUnit"
+                value={formData.measuringUnit}
+                onChange={handleInputChange}
                 placeholder="Pieces (PCS)" 
                 className="w-full border rounded px-2 py-1"
               />
@@ -80,6 +113,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">Godown</label>
               <input 
                 type="text" 
+                name="godown"
+                value={formData.godown}
+                onChange={handleInputChange}
                 placeholder="Select Godown" 
                 className="w-full border rounded px-2 py-1"
               />
@@ -90,6 +126,9 @@ const CreateItemForm = () => {
               <div className="flex">
                 <input 
                   type="text" 
+                  name="openingStock"
+                  value={formData.openingStock}
+                  onChange={handleInputChange}
                   placeholder="ex: 100" 
                   className="flex-grow border rounded-l px-2 py-1"
                 />
@@ -101,7 +140,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">As of Date</label>
               <input 
                 type="date" 
-                value="2025-03-16"
+                name="asOfDate"
+                value={formData.asOfDate}
+                onChange={handleInputChange}
                 className="w-full border rounded px-2 py-1"
               />
             </div>
@@ -110,6 +151,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">Pricing Type</label>
               <input 
                 type="text" 
+                name="pricingType"
+                value={formData.pricingType}
+                onChange={handleInputChange}
                 placeholder="Select Pricing Type" 
                 className="w-full border rounded px-2 py-1"
               />
@@ -119,6 +163,9 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">Selling Price</label>
               <input 
                 type="text" 
+                name="sellingPrice"
+                value={formData.sellingPrice}
+                onChange={handleInputChange}
                 placeholder="Enter Selling Price" 
                 className="w-full border rounded px-2 py-1"
               />
@@ -128,12 +175,20 @@ const CreateItemForm = () => {
               <label className="block text-sm font-medium text-gray-700">Custom Fields</label>
               <input 
                 type="text" 
+                name="customFields"
+                value={formData.customFields.value || ''}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  customFields: { ...prev.customFields, value: e.target.value }
+                }))}
                 placeholder="Enter Custom Fields" 
                 className="w-full border rounded px-2 py-1"
               />
             </div>
           </div>
         );
+      default:
+        return null;
     }
   };
 
@@ -152,7 +207,7 @@ const CreateItemForm = () => {
           <button className="text-gray-600 hover:bg-gray-100 p-2 rounded">Cancel</button>
           <button 
             className="bg-purple-600 text-white px-4 py-2 rounded flex items-center"
-            onClick={() => {/* Save logic */}}
+            onClick={handleSave}
           >
             <PlusCircle size={18} className="mr-2" />
             Save
@@ -165,7 +220,7 @@ const CreateItemForm = () => {
         {sections.map((section) => (
           <button
             key={section.id}
-            onClick={() => setActiveSection(section.id)}
+            onClick={() => handleSectionClick(section.id, section.path)}
             className={`flex flex-col items-center p-2 rounded-lg w-full ${
               activeSection === section.id 
                 ? 'bg-purple-100 text-purple-600' 
