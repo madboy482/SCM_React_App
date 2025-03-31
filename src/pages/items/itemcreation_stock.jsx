@@ -17,15 +17,15 @@ const ItemCreationStock = () => {
     const previousData = location.state?.formData || {};
     return {
       ...previousData,
-      itemCode: previousData.itemCode || 'ITM12367',
-      hsnCode: previousData.hsnCode || '4010',
+      itemCode: previousData.itemCode || '',
+      hsnCode: previousData.hsnCode || '',
       measuringUnit: previousData.measuringUnit || 'Pieces(PCS)',
       godown: previousData.godown || '',
-      openingStock: previousData.openingStock || '160',
+      openingStock: previousData.openingStock || '',
       openingStockUnit: previousData.openingStockUnit || 'PCS',
-      asOfDate: previousData.asOfDate || '16 Mar 2025',
+      asOfDate: previousData.asOfDate || '',
       enableLowStockWarning: previousData.enableLowStockWarning || false,
-      lowStockThreshold: previousData.lowStockThreshold || '10',
+      lowStockThreshold: previousData.lowStockThreshold || '',
       description: previousData.description || '',
       images: previousData.images || []
     };
@@ -194,20 +194,20 @@ const ItemCreationStock = () => {
   const renderActiveSection = () => {
     if (activeSection === 'stock-details') {
       return (
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-4">
           {/* Item Code */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">Item Code</label>
-            <div className="flex gap-2">
+            <label className="block text-sm font-medium text-gray-700">Item Code</label>
+            <div className="flex">
               <input 
                 type="text"
                 name="itemCode"
                 value={formData.itemCode}
                 onChange={handleInputChange}
-                placeholder="ex: ITM12367"
-                className="flex-grow p-3 border rounded-lg"
+                placeholder="Ex: ITM12367"
+                className="flex-grow border rounded-l px-2 py-1"
               />
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+              <button className="bg-blue-500 text-white px-3 rounded-r">
                 Generate Barcode
               </button>
             </div>
@@ -215,88 +215,83 @@ const ItemCreationStock = () => {
           
           {/* HSN Code */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">HSN Code</label>
+            <label className="block text-sm font-medium text-gray-700">HSN Code</label>
             <input 
               type="text"
               name="hsnCode"
               value={formData.hsnCode}
               onChange={handleInputChange}
               placeholder="Ex: 4010"
-              className="w-full p-3 border rounded-lg"
+              className="w-full border rounded px-2 py-1"
             />
-            <div className="text-blue-600 text-sm">Find HSN Code</div>
+            <div className="text-blue-600 text-xs">Find HSN Code</div>
           </div>
           
           {/* Measuring Unit */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">Measuring Unit</label>
-            <div className="relative">
-              <select
-                name="measuringUnit"
-                value={formData.measuringUnit}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded-lg appearance-none"
-              >
-                <option value="Pieces(PCS)">Pieces(PCS)</option>
-                <option value="Kilograms(KG)">Kilograms(KG)</option>
-                <option value="Liters(L)">Liters(L)</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-            </div>
-            <div className="text-blue-600 text-sm">+ Alternative Unit</div>
+            <label className="block text-sm font-medium text-gray-700">Measuring Unit</label>
+            <select
+              name="measuringUnit"
+              value={formData.measuringUnit}
+              onChange={handleInputChange}
+              className="w-full border rounded px-2 py-1 appearance-none"
+            >
+              <option value="Pieces(PCS)">Pieces(PCS)</option>
+              <option value="Kilograms(KG)">Kilograms(KG)</option>
+              <option value="Liters(L)">Liters(L)</option>
+            </select>
+            <div className="text-blue-600 text-xs">+ Alternative Unit</div>
           </div>
           
           {/* Godowns */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">Godowns</label>
-            <div className="relative">
-              <select
-                name="godown"
-                value={formData.godown}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded-lg appearance-none"
-              >
-                <option value="">Select Godown</option>
-                <option value="Warehouse A">Warehouse A</option>
-                <option value="Warehouse B">Warehouse B</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-            </div>
+            <label className="block text-sm font-medium text-gray-700">Godowns</label>
+            <select
+              name="godown"
+              value={formData.godown}
+              onChange={handleInputChange}
+              className="w-full border rounded px-2 py-1 appearance-none"
+            >
+              <option value="">Select Godown</option>
+              <option value="Warehouse A">Warehouse A</option>
+              <option value="Warehouse B">Warehouse B</option>
+            </select>
           </div>
           
           {/* Opening Stock */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">Opening Stock</label>
-            <div className="flex gap-2">
+            <label className="block text-sm font-medium text-gray-700">Opening Stock</label>
+            <div className="flex">
               <input 
                 type="text"
                 name="openingStock"
                 value={formData.openingStock}
                 onChange={handleInputChange}
-                placeholder="ex: 160 PCS"
-                className="flex-grow p-3 border rounded-lg"
+                placeholder="ex: 160"
+                className="flex-grow border rounded-l px-2 py-1"
               />
-              <div className="w-20 bg-white border rounded-lg flex items-center justify-center">
-                {formData.openingStockUnit}
-              </div>
+              <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">
+                {formData.openingStockUnit || 'PCS'}
+              </span>
             </div>
           </div>
           
           {/* As of Date with Calendar Dropdown */}
           <div className="space-y-2 relative">
-            <label className="text-gray-800 font-medium">As of Date</label>
+            <label className="block text-sm font-medium text-gray-700">As of Date</label>
             <div className="relative">
               <input 
                 type="text"
                 name="asOfDate"
                 value={formData.asOfDate}
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-lg pr-10"
+                placeholder="DD MMM YYYY"
+                className="w-full border rounded px-2 py-1 pr-8"
                 readOnly
               />
               <Calendar 
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer" 
-                size={18} 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer" 
+                size={16} 
                 onClick={() => setShowCalendar(!showCalendar)}
               />
             </div>
@@ -305,30 +300,30 @@ const ItemCreationStock = () => {
             {showCalendar && (
               <div 
                 ref={calendarRef}
-                className="absolute z-20 mt-2 bg-white shadow-lg rounded-lg p-4 w-full md:w-80"
+                className="absolute z-20 mt-1 bg-white shadow-lg rounded-lg p-3 w-64"
               >
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-2">
                   <button 
                     onClick={handlePrevMonth}
                     className="p-1 hover:bg-gray-100 rounded-full"
                   >
-                    <ChevronDown className="transform rotate-90" size={20} />
+                    <ChevronDown className="transform rotate-90" size={16} />
                   </button>
-                  <div className="font-medium">
+                  <div className="text-sm font-medium">
                     {monthNames[calendarState.currentMonth]} {calendarState.currentYear}
                   </div>
                   <button 
                     onClick={handleNextMonth}
                     className="p-1 hover:bg-gray-100 rounded-full"
                   >
-                    <ChevronDown className="transform -rotate-90" size={20} />
+                    <ChevronDown className="transform -rotate-90" size={16} />
                   </button>
                 </div>
                 
                 <div className="grid grid-cols-7 gap-1 text-center">
                   {/* Days of week header */}
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-                    <div key={day} className="font-medium text-gray-500 text-xs mb-2">{day}</div>
+                    <div key={day} className="text-xs text-gray-500 mb-1">{day}</div>
                   ))}
                   
                   {/* Calendar days */}
@@ -341,12 +336,12 @@ const ItemCreationStock = () => {
           {/* Enable low stock quantity warning */}
           <div className="flex items-center">
             <div 
-              className="text-blue-600 text-sm mr-2 cursor-pointer"
+              className="text-blue-600 text-xs cursor-pointer"
               onClick={toggleLowStockWarning}
             >
               + Enable low stock quantity warning
             </div>
-            <Info size={16} className="text-blue-600 cursor-pointer" onClick={toggleLowStockWarning} />
+            <Info size={12} className="text-blue-600 cursor-pointer ml-1" onClick={toggleLowStockWarning} />
           </div>
           
           {/* Low Stock Warning Popup */}
@@ -354,42 +349,43 @@ const ItemCreationStock = () => {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
               <div 
                 ref={warningRef}
-                className="bg-white rounded-lg p-6 w-full max-w-md"
+                className="bg-white rounded-lg p-4 w-full max-w-sm"
               >
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center">
-                    <AlertTriangle size={24} className="text-yellow-500 mr-2" />
-                    <h3 className="text-lg font-semibold">Low Stock Warning</h3>
+                    <AlertTriangle size={16} className="text-yellow-500 mr-2" />
+                    <h3 className="text-sm font-semibold">Low Stock Warning</h3>
                   </div>
                   <X 
-                    size={20} 
-                    className="cursor-pointer text-gray-500 hover:text-gray-700"
+                    size={16} 
+                    className="cursor-pointer text-gray-500"
                     onClick={() => setShowWarningPopup(false)}
                   />
                 </div>
                 
-                <div className="mb-6">
-                  <p className="mb-4">
+                <div className="mb-4">
+                  <p className="mb-3 text-sm">
                     Low stock quantity warning is {formData.enableLowStockWarning ? 'now in action' : 'disabled'}.
                   </p>
                   
                   {formData.enableLowStockWarning && (
                     <div className="space-y-2">
-                      <label className="text-gray-800 font-medium">Threshold Quantity</label>
-                      <div className="flex gap-2">
+                      <label className="block text-sm font-medium text-gray-700">Threshold Quantity</label>
+                      <div className="flex">
                         <input 
                           type="number"
                           name="lowStockThreshold"
                           value={formData.lowStockThreshold}
                           onChange={handleInputChange}
-                          className="flex-grow p-3 border rounded-lg"
+                          placeholder="Enter threshold"
+                          className="flex-grow border rounded-l px-2 py-1"
                           min="1"
                         />
-                        <div className="w-20 bg-white border rounded-lg flex items-center justify-center">
-                          {formData.openingStockUnit}
-                        </div>
+                        <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">
+                          {formData.openingStockUnit || 'PCS'}
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-xs text-gray-600">
                         You will receive notifications when stock falls below this threshold.
                       </p>
                     </div>
@@ -398,13 +394,13 @@ const ItemCreationStock = () => {
                 
                 <div className="flex justify-end space-x-2">
                   <button 
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50" 
+                    className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50" 
                     onClick={() => setShowWarningPopup(false)}
                   >
                     Cancel
                   </button>
                   <button 
-                    className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                    className="px-3 py-1 bg-purple-600 text-white rounded text-sm hover:bg-purple-700"
                     onClick={() => setShowWarningPopup(false)}
                   >
                     Confirm
@@ -416,31 +412,28 @@ const ItemCreationStock = () => {
           
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-gray-800 font-medium">Description</label>
-            <div className="relative">
-              <input 
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Enter Description"
-                className="w-full p-3 border rounded-lg pr-10"
-              />
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-            </div>
+            <label className="block text-sm font-medium text-gray-700">Description</label>
+            <input 
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              placeholder="Enter Description"
+              className="w-full border rounded px-2 py-1"
+            />
           </div>
           
           {/* Image Upload */}
-          <div className="border border-dashed border-gray-300 rounded-lg p-6 text-center">
+          <div className="border border-dashed border-gray-300 rounded p-4 text-center mt-4">
             <div className="flex justify-center mb-2">
-              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                <PlusCircle className="text-gray-600" size={24} />
+              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                <PlusCircle className="text-gray-600" size={16} />
               </div>
             </div>
-            <p className="text-gray-800 font-medium">Please select or drag and drop 5 files.</p>
-            <p className="text-gray-600 text-sm mb-4">Maximum of 5 images in PNG or JPEG file size no more than 5 MB</p>
+            <p className="text-sm font-medium text-gray-700">Please select or drag and drop 5 files.</p>
+            <p className="text-xs text-gray-600 mb-3">Maximum of 5 images in PNG or JPEG file size no more than 5 MB</p>
             <button 
-              className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg"
+              className="px-3 py-1 bg-blue-100 text-blue-600 rounded text-sm"
               onClick={handleFileSelect}
             >
               Select File
@@ -475,7 +468,7 @@ const ItemCreationStock = () => {
         </div>
       </div>
 
-      {/* Section Navigation - Removed mt-4 to eliminate gap */}
+      {/* Section Navigation */}
       <div className="bg-white shadow-sm flex justify-between p-2 mx-4 rounded-lg">
         {sections.map((section) => (
           <button
