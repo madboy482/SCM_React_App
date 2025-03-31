@@ -23,7 +23,7 @@ const ItemCreationFields = () => {
   ];
 
   const handleBack = () => {
-    navigate('/create-item', { state: { formData: { ...formData, customFields } } });
+    navigate('/parties-inventory', { state: { formData: { ...formData, customFields } } });
   };
 
   const handleSectionClick = (sectionId, path) => {
