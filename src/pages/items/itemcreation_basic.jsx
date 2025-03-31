@@ -67,13 +67,12 @@ const CreateItemForm = () => {
     switch(activeSection) {
       case 'basic-details':
         return (
-          <div className="bg-white rounded-lg p-4 space-y-4">
+          <div className="p-4 space-y-4">
             <div className="space-y-2">
-              <label className="block text-gray-800 font-medium">Item Type <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-gray-700">Item Type <span className="text-red-500">*</span></label>
               <div className="grid grid-cols-2 gap-2">
-                {/* Added onClick handler to change itemType to 'Product' */}
                 <div 
-                  className={`border rounded-lg p-2 flex items-center cursor-pointer ${formData.itemType === 'Product' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
+                  className={`border rounded px-2 py-1 flex items-center cursor-pointer ${formData.itemType === 'Product' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
                   onClick={() => setFormData({...formData, itemType: 'Product'})}
                 >
                   <div className={`w-5 h-5 rounded-full border ${formData.itemType === 'Product' ? 'border-purple-500 bg-purple-500' : 'border-gray-400'} mr-2 flex items-center justify-center`}>
@@ -81,9 +80,8 @@ const CreateItemForm = () => {
                   </div>
                   <span>Product</span>
                 </div>
-                {/* Added onClick handler to change itemType to 'Service' */}
                 <div 
-                  className={`border rounded-lg p-2 flex items-center cursor-pointer ${formData.itemType === 'Service' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
+                  className={`border rounded px-2 py-1 flex items-center cursor-pointer ${formData.itemType === 'Service' ? 'border-purple-500 bg-purple-50' : 'border-gray-300'}`}
                   onClick={() => setFormData({...formData, itemType: 'Service'})}
                 >
                   <div className={`w-5 h-5 rounded-full border ${formData.itemType === 'Service' ? 'border-purple-500 bg-purple-500' : 'border-gray-400'} mr-2 flex items-center justify-center`}>
@@ -94,14 +92,14 @@ const CreateItemForm = () => {
               </div>
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">Category</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Category</label>
               <div className="relative">
                 <select 
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded-lg p-2 pr-8 appearance-none"
+                  className="w-full border rounded px-2 py-1 pr-8 appearance-none"
                 >
                   <option value="">Select Category</option>
                   <option value="category1">Category 1</option>
@@ -115,21 +113,21 @@ const CreateItemForm = () => {
               </div>
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">Item Name <span className="text-red-500">*</span></label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Item Name <span className="text-red-500">*</span></label>
               <input 
                 type="text" 
                 name="itemName"
                 value={formData.itemName}
                 onChange={handleInputChange}
                 placeholder="ex: Maggie 20gm" 
-                className="w-full border border-gray-300 rounded-lg p-2"
+                className="w-full border rounded px-2 py-1"
               />
               {!formData.itemName && <p className="text-red-500 text-xs">Please enter the item name</p>}
             </div>
   
             <div className="flex items-center justify-between">
-              <label className="block text-gray-800 font-medium">Show Item in Online Store</label>
+              <label className="block text-sm font-medium text-gray-700">Show Item in Online Store</label>
               <div className="relative">
                 <input 
                   type="checkbox" 
@@ -150,10 +148,10 @@ const CreateItemForm = () => {
               </div>
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">Sales Price</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Sales Price</label>
               <div className="flex">
-                <div className="bg-gray-100 border border-gray-300 rounded-l-lg p-2 flex items-center">
+                <div className="bg-gray-100 border rounded-l px-2 py-1 flex items-center">
                   <span className="text-gray-500">₹</span>
                 </div>
                 <input 
@@ -161,67 +159,64 @@ const CreateItemForm = () => {
                   name="salesPrice"
                   value={formData.salesPrice}
                   onChange={handleInputChange}
-                  placeholder="ex: ₹200" 
-                  className="flex-grow border border-gray-300 rounded-r-lg p-2"
+                  placeholder="ex: 200" 
+                  className="flex-grow border rounded-r px-2 py-1"
                 />
               </div>
             </div>
   
             <div className="flex justify-end">
-              {/* Modified "With Tax" to be clickable with state tracking */}
               <div 
-                className={`border rounded-lg p-2 cursor-pointer ${formData.withTax ? 'bg-purple-50 border-purple-500 text-purple-700' : 'bg-gray-100 border-gray-300 text-gray-700'}`}
+                className={`border rounded px-2 py-1 cursor-pointer ${formData.withTax ? 'bg-purple-50 border-purple-500 text-purple-700' : 'bg-gray-100 border-gray-300 text-gray-700'}`}
                 onClick={() => setFormData({...formData, withTax: !formData.withTax})}
               >
                 <span>With Tax</span>
               </div>
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">GST Tax Rate(%)</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">GST Tax Rate(%)</label>
               <input 
                 type="text" 
                 name="gstTaxRate"
                 value={formData.gstTaxRate}
                 onChange={handleInputChange}
                 placeholder="None" 
-                className="w-full border border-gray-300 rounded-lg p-2"
+                className="w-full border rounded px-2 py-1"
               />
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">Measuring Unit</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Measuring Unit</label>
               <input 
                 type="text" 
                 name="measuringUnit"
                 value={formData.measuringUnit}
                 onChange={handleInputChange}
                 placeholder="Pieces(PCS)" 
-                className="w-full border border-gray-300 rounded-lg p-2"
+                className="w-full border rounded px-2 py-1"
               />
             </div>
   
-            <div className="space-y-1">
-              <label className="block text-gray-800 font-medium">Opening Stock</label>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Opening Stock</label>
               <div className="flex">
                 <input 
                   type="text" 
                   name="openingStock"
                   value={formData.openingStock}
                   onChange={handleInputChange}
-                  placeholder="ex: 150 PCS" 
-                  className="flex-grow border border-gray-300 rounded-l-lg p-2"
+                  placeholder="ex: 150" 
+                  className="flex-grow border rounded-l px-2 py-1"
                 />
-                <div className="bg-white border border-gray-300 rounded-r-lg p-2 flex items-center">
-                  <span className="text-gray-700">PCS</span>
-                </div>
+                <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">PCS</span>
               </div>
             </div>
   
-            <div className="border border-gray-300 rounded-lg p-3">
+            <div className="border border-gray-300 rounded p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <span className="text-gray-800 font-medium mr-2">Enable Batching</span>
+                  <span className="text-sm font-medium text-gray-700 mr-2">Enable Batching</span>
                   <div className="bg-purple-100 text-purple-600 rounded-full w-5 h-5 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
