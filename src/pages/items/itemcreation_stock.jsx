@@ -12,24 +12,42 @@ const ItemCreationStock = () => {
   const calendarRef = useRef(null);
   const warningRef = useRef(null);
   
-// Initialize formData with data from location state if available
-const [formData, setFormData] = useState(() => {
-  const previousData = location.state?.formData || {};
-  return {
-    ...previousData,
-    itemCode: previousData.itemCode || '',
-    hsnCode: previousData.hsnCode || '',
-    measuringUnit: previousData.measuringUnit || 'Pieces(PCS)',
-    godown: previousData.godown || '',
-    openingStock: previousData.openingStock || '',
-    openingStockUnit: previousData.openingStockUnit || 'PCS',
-    asOfDate: previousData.asOfDate || '2025-03-16',
-    enableLowStockWarning: previousData.enableLowStockWarning || false,
-    lowStockThreshold: previousData.lowStockThreshold || '',
-    description: previousData.description || '',
-    images: previousData.images || []
-  };
-});
+  // Initialize formData with data from location state if available
+  const [formData, setFormData] = useState(() => {
+    const previousData = location.state?.formData || {};
+    // Parse the date format if it exists in previous data
+    let formattedDate = '';
+    if (previousData.asOfDate) {
+      try {
+        // Try to format the date regardless of the input format
+        const parts = previousData.asOfDate.split(/[-/]/);
+        // If it's in YYYY-MM-DD format, convert to DD-MM-YYYY
+        if (parts[0].length === 4) {
+          formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        } else {
+          formattedDate = previousData.asOfDate;
+        }
+      } catch (e) {
+        // Keep empty if there's an error
+        formattedDate = '';
+      }
+    }
+
+    return {
+      ...previousData,
+      itemCode: previousData.itemCode || '',
+      hsnCode: previousData.hsnCode || '',
+      measuringUnit: previousData.measuringUnit || 'Pieces(PCS)',
+      godown: previousData.godown || '',
+      openingStock: previousData.openingStock || '',
+      openingStockUnit: previousData.openingStockUnit || 'PCS',
+      asOfDate: formattedDate || '',
+      enableLowStockWarning: previousData.enableLowStockWarning || false,
+      lowStockThreshold: previousData.lowStockThreshold || '',
+      description: previousData.description || '',
+      images: previousData.images || []
+    };
+  });
 
   const sections = [
     { id: 'basic-details', label: 'Basic Details', icon: FileText, path: '/item_creation_basic' },
@@ -153,9 +171,13 @@ const [formData, setFormData] = useState(() => {
     });
   };
 
+  // Updated to use DD-MM-YYYY format as requested
   const handleSelectDate = (day) => {
-    const date = new Date(calendarState.currentYear, calendarState.currentMonth, day);
-    const formattedDate = `${day} ${monthNames[calendarState.currentMonth].substring(0, 3)} ${calendarState.currentYear}`;
+    // Format to DD-MM-YYYY
+    const month = calendarState.currentMonth + 1;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedDate = `${formattedDay}-${formattedMonth}-${calendarState.currentYear}`;
     
     setFormData(prev => ({
       ...prev,
@@ -271,22 +293,24 @@ const [formData, setFormData] = useState(() => {
                 className="flex-grow border rounded-l px-2 py-1"
               />
               <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">
-                {formData.openingStockUnit || 'PCS'}
+                {formData.openingStockUnit || "PCS"}
               </span>
             </div>
           </div>
           
-          {/* As of Date with Calendar Dropdown */}
-          <div className="space-y-2">
+          {/* As of Date with Calendar Dropdown - Updated to use DD-MM-YYYY format */}
+          <div className="space-y-2 relative">
             <label className="block text-sm font-medium text-gray-700">As of Date</label>
             <div className="relative">
               <input 
-                type="date"
+                type="text"
                 name="asOfDate"
                 value={formData.asOfDate}
                 onChange={handleInputChange}
-                className="w-full border rounded px-2 py-1  "
+                placeholder="DD-MM-YYYY"
+                className="w-full border rounded px-2 py-1 pr-8"
                 readOnly
+                onClick={() => setShowCalendar(!showCalendar)}
               />
               <Calendar 
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer" 
@@ -376,12 +400,12 @@ const [formData, setFormData] = useState(() => {
                           name="lowStockThreshold"
                           value={formData.lowStockThreshold}
                           onChange={handleInputChange}
-                          placeholder="Enter threshold"
                           className="flex-grow border rounded-l px-2 py-1"
                           min="1"
+                          placeholder="Enter threshold"
                         />
                         <span className="bg-gray-100 border px-3 py-1 rounded-r flex items-center">
-                          {formData.openingStockUnit || 'PCS'}
+                          {formData.openingStockUnit || "PCS"}
                         </span>
                       </div>
                       <p className="text-xs text-gray-600">
